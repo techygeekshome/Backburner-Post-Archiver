@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/icon-256x256.png" alt="BackBurner Post Archiver logo" width="96" height="96">
+
 # BackBurner Post Archiver
 
 **Automatically move old content out of active circulation after a configurable age — without ever deleting anything or breaking a single URL.**
@@ -72,6 +74,14 @@ Found a bug or have a feature request? [Open an issue](https://github.com/techyg
 
 BackBurner Post Archiver is free to download and use. This repository is proprietary freeware, not an open-source project — see [LICENSE](LICENSE) for the full terms. (Once approved on the official WordPress Plugin Directory, the copy distributed there will be licensed GPLv2-or-later, as required by wordpress.org.)
 
-© 2026 TechyGeeksHome.
+© 2026 TechyGeeksHome | Andrew Armstrong.
 
-Made with ❤️ by [TechyGeeksHome](https://techygeekshome.info)
+---
+
+<div align="center">
+
+Made with ❤️ by [**TechyGeeksHome**](https://techygeekshome.info)
+
+[Website](https://techygeekshome.info) · [YouTube](https://www.youtube.com/channel/UCtEuFj1SMLiuRoucD1hv8dA) · [X](https://x.com/TechyGeeks1) · [Facebook](https://www.facebook.com/techygeeks.home) · [Instagram](https://www.instagram.com/andrewarmstrongtgh/)
+
+</div>
