@@ -10,6 +10,7 @@
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-0073d4)](https://techygeekshome.info/product/backburner-post-archiver/)
 [![License](https://img.shields.io/badge/license-proprietary%20freeware-b7791f)](LICENSE)
 [![Made_by_TechyGeeksHome](https://img.shields.io/badge/made%20by-TechyGeeksHome-b191f2)](https://techygeekshome.info)
+[![Support on Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b)](https://ko-fi.com/techygeekshome)
 
 [Features](#-what-it-does) · [Installation](#-installation) · [FAQ](#-frequently-asked-questions) · [License](#-license)
 
