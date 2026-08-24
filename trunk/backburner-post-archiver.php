@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BackBurner Post Archiver
  * Description: Automatically moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age — without deleting anything or breaking any URL. Archived posts keep working for anyone with a direct link or existing search ranking; they just stop appearing in "latest" listings.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: TechyGeeksHome
  * Author URI: https://techygeekshome.info
  * License: GPLv2 or later
@@ -103,17 +103,20 @@ function backburner_exclude_from_public_queries( $query ) {
 add_action( 'add_meta_boxes', 'backburner_add_metabox' );
 function backburner_add_metabox() {
 	foreach ( array( 'post', 'page', 'product' ) as $pt ) {
-		add_meta_box( 'backburner_exclude', 'Auto Archive', 'backburner_render_metabox', $pt, 'side', 'low' );
+		add_meta_box( 'backburner_exclude', __( 'Auto Archive', 'backburner-post-archiver' ), 'backburner_render_metabox', $pt, 'side', 'low' );
 	}
 }
 function backburner_render_metabox( $post ) {
 	wp_nonce_field( 'backburner_save_meta', 'backburner_nonce' );
 	$excluded = get_post_meta( $post->ID, '_backburner_exclude', true );
 	$status   = get_post_status( $post );
-	echo '<label><input type="checkbox" name="backburner_exclude" value="1" ' . checked( $excluded, '1', false ) . ' /> Never auto-archive this post</label>';
+	echo '<label><input type="checkbox" name="backburner_exclude" value="1" ' . checked( $excluded, '1', false ) . ' /> ' . esc_html__( 'Never auto-archive this post', 'backburner-post-archiver' ) . '</label>';
 	if ( BACKBURNER_STATUS === $status ) {
-		echo '<p style="margin-top:8px;"><strong>This post is currently archived</strong> — hidden from homepage/category/search listings, but still live at its own URL.</p>';
-		echo '<p><em>Change the Status field above (in the Publish box) back to Published to restore it to normal circulation.</em></p>';
+		echo '<p style="margin-top:8px;">' . wp_kses(
+			__( '<strong>This post is currently archived</strong> — hidden from homepage/category/search listings, but still live at its own URL.', 'backburner-post-archiver' ),
+			array( 'strong' => array() )
+		) . '</p>';
+		echo '<p><em>' . esc_html__( 'Change the Status field above (in the Publish box) back to Published to restore it to normal circulation.', 'backburner-post-archiver' ) . '</em></p>';
 	}
 }
 add_action( 'save_post', 'backburner_save_meta' );
@@ -252,7 +255,14 @@ function backburner_admin_menu() {
 			null
 		);
 	}
-	add_submenu_page( 'tghhub', 'BackBurner Post Archiver', 'BackBurner', 'manage_options', 'backburner-post-archiver', 'backburner_settings_page' );
+	add_submenu_page(
+		'tghhub',
+		__( 'BackBurner Post Archiver', 'backburner-post-archiver' ),
+		__( 'BackBurner', 'backburner-post-archiver' ),
+		'manage_options',
+		'backburner-post-archiver',
+		'backburner_settings_page'
+	);
 }
 
 if ( ! function_exists( 'tghhub_menu_icon_svg' ) ) {
@@ -266,20 +276,22 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 		$plugins = apply_filters(
 			'tghhub_plugins',
 			array(
-				// BackBurner Post Archiver is intentionally omitted here until it is
-				// actually live/approved on WordPress.org -- the hub only links to
-				// plugins and themes with a real public listing. Add it back in
-				// (linking to https://wordpress.org/plugins/backburner-post-archiver/)
-				// once approved, and update every other published plugin/theme's
-				// copy of this array at the same time.
+				// Everything listed here must have a real public listing. Verified live
+				// on 2026-08-24. This array is duplicated in every TGH plugin and theme
+				// that ships the hub -- update them together or they drift apart.
 				array(
-					'name'        => 'Controlled Draft Publisher',
-					'description' => 'Hold posts as controlled drafts and publish them on your own schedule.',
+					'name'        => __( 'BackBurner Post Archiver', 'backburner-post-archiver' ),
+					'description' => __( 'Moves old posts out of active circulation without deleting them or breaking a URL.', 'backburner-post-archiver' ),
+					'url'         => 'https://wordpress.org/plugins/backburner-post-archiver/',
+				),
+				array(
+					'name'        => __( 'Controlled Draft Publisher', 'backburner-post-archiver' ),
+					'description' => __( 'Hold posts as controlled drafts and publish them on your own schedule.', 'backburner-post-archiver' ),
 					'url'         => 'https://wordpress.org/plugins/controlled-draft-publisher/',
 				),
 				array(
-					'name'        => 'LinkGather',
-					'description' => 'Collects and manages links across your site.',
+					'name'        => __( 'LinkGather', 'backburner-post-archiver' ),
+					'description' => __( 'Collects and manages links across your site.', 'backburner-post-archiver' ),
 					'url'         => 'https://wordpress.org/plugins/linkgather/',
 				),
 			)
@@ -287,38 +299,62 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 
 		$themes = array(
 			array(
-				'name'        => 'NeoDark Free',
-				'description' => 'A fast, dark-mode WordPress theme for tech blogs, tutorials, and reviews.',
+				'name'        => __( 'NeoDark Free', 'backburner-post-archiver' ),
+				'description' => __( 'A fast, dark-mode WordPress theme for tech blogs, tutorials and reviews.', 'backburner-post-archiver' ),
 				'url'         => 'https://techygeekshome.info/neodark-free/',
-				'cta'         => 'View Theme',
+				'cta'         => __( 'View Theme', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'NeoDark Pro', 'backburner-post-archiver' ),
+				'description' => __( 'Hero slider, three-column layout, review blocks and a mega menu. One-time payment.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/neodark-pro/',
+				'cta'         => __( 'View Theme', 'backburner-post-archiver' ),
 			),
 		);
 
 		$software = array(
 			array(
-				'name'        => 'DiskGeek',
-				'description' => 'Free disk space analyser for Windows: scan, find duplicates, and reclaim space.',
-				'url'         => 'https://techygeekshome.info/introducing-diskgeek-a-free-disk-space-analyser-for-windows/',
-				'cta'         => 'View / Download',
+				'name'        => __( 'AppGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Update every application on a Windows PC in one go, using winget.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/appgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'PDFGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Merge, split, compress and convert PDFs entirely offline.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/pdfgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'DiskGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Free disk space analyser for Windows: scan, find duplicates and reclaim space.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/diskgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'Ultimate Settings Panel', 'backburner-post-archiver' ),
+				'description' => __( '250+ Windows settings, tools and commands in one fast, searchable panel.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/ultimate-settings-panel-online/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
 			),
 		);
 		?>
 		<div class="wrap tghhub-dashboard">
 			<h1>TechyGeeksHome</h1>
-			<p>A shared home for everything we have built &mdash; our WordPress plugins, our theme, and our standalone software.</p>
+			<p><?php esc_html_e( 'A shared home for everything we have built &mdash; our WordPress plugins, our themes, and our standalone software.', 'backburner-post-archiver' ); ?></p>
 
-			<h2>Our Plugins</h2>
+			<h2><?php esc_html_e( 'Our Plugins', 'backburner-post-archiver' ); ?></h2>
 			<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;">
 				<?php foreach ( $plugins as $p ) : ?>
 					<div style="border:1px solid #dcdcde;border-radius:6px;padding:16px;width:280px;background:#fff;">
 						<h3 style="margin-top:0;"><?php echo esc_html( $p['name'] ); ?></h3>
 						<p><?php echo esc_html( $p['description'] ); ?></p>
-						<a href="<?php echo esc_url( $p['url'] ); ?>" class="button button-primary" target="_blank" rel="noopener">View Plugin</a>
+						<a href="<?php echo esc_url( $p['url'] ); ?>" class="button button-primary" target="_blank" rel="noopener"><?php esc_html_e( 'View Plugin', 'backburner-post-archiver' ); ?></a>
 					</div>
 				<?php endforeach; ?>
 			</div>
 
-			<h2 style="margin-top:32px;">Our Themes</h2>
+			<h2 style="margin-top:32px;"><?php esc_html_e( 'Our Themes', 'backburner-post-archiver' ); ?></h2>
 			<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;">
 				<?php foreach ( $themes as $t ) : ?>
 					<div style="border:1px solid #dcdcde;border-radius:6px;padding:16px;width:280px;background:#fff;">
@@ -329,7 +365,7 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 				<?php endforeach; ?>
 			</div>
 
-			<h2 style="margin-top:32px;">Our Software</h2>
+			<h2 style="margin-top:32px;"><?php esc_html_e( 'Our Software', 'backburner-post-archiver' ); ?></h2>
 			<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;">
 				<?php foreach ( $software as $s ) : ?>
 					<div style="border:1px solid #dcdcde;border-radius:6px;padding:16px;width:280px;background:#fff;">
@@ -361,12 +397,12 @@ function backburner_handle_actions() {
 			'tag_ids'      => isset( $_POST['tag_ids'] ) ? array_map( 'intval', (array) wp_unslash( $_POST['tag_ids'] ) ) : array(),
 		);
 		update_option( BACKBURNER_OPTION, $settings );
-		add_settings_error( 'backburner_notices', 'saved', 'Settings saved.', 'success' );
+		add_settings_error( 'backburner_notices', 'saved', __( 'Settings saved.', 'backburner-post-archiver' ), 'success' );
 	}
 
 	if ( isset( $_POST['backburner_run_now'] ) && check_admin_referer( 'backburner_run_now' ) ) {
 		backburner_run( true );
-		add_settings_error( 'backburner_notices', 'ran', 'Run complete — see the log below.', 'success' );
+		add_settings_error( 'backburner_notices', 'ran', __( 'Run complete — see the log below.', 'backburner-post-archiver' ), 'success' );
 	}
 }
 
@@ -383,39 +419,46 @@ function backburner_settings_page() {
 	settings_errors( 'backburner_notices' );
 	?>
 	<div class="wrap">
-		<h1>BackBurner Post Archiver</h1>
-		<p>Moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age. <strong>Nothing is deleted and no URL breaks</strong> — archived posts still load normally for anyone with a direct link or existing search ranking; they simply stop being promoted as &quot;latest&quot; content. This is different from Trash, which is a step toward permanent deletion.</p>
+		<h1><?php esc_html_e( 'BackBurner Post Archiver', 'backburner-post-archiver' ); ?></h1>
+		<p>
+			<?php
+			echo wp_kses(
+				__( 'Moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age. <strong>Nothing is deleted and no URL breaks</strong> &mdash; archived posts still load normally for anyone with a direct link or existing search ranking; they simply stop being promoted as &quot;latest&quot; content. This is different from Trash, which is a step toward permanent deletion.', 'backburner-post-archiver' ),
+				array( 'strong' => array() )
+			);
+			?>
+		</p>
 
 		<form method="post">
 			<?php wp_nonce_field( 'backburner_save_settings' ); ?>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row">Enabled</th>
+					<th scope="row"><?php esc_html_e( 'Enabled', 'backburner-post-archiver' ); ?></th>
 					<td>
-						<label><input type="checkbox" name="enabled" value="1" <?php checked( $settings['enabled'] ); ?> /> Turn on the daily auto-archive job</label>
-						<p class="description">Off by default. Nothing runs until you check this.</p>
+						<label><input type="checkbox" name="enabled" value="1" <?php checked( $settings['enabled'] ); ?> /> <?php esc_html_e( 'Turn on the daily auto-archive job', 'backburner-post-archiver' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Off by default. Nothing runs until you check this.', 'backburner-post-archiver' ); ?></p>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">Dry run</th>
+					<th scope="row"><?php esc_html_e( 'Dry run', 'backburner-post-archiver' ); ?></th>
 					<td>
-						<label><input type="checkbox" name="dry_run" value="1" <?php checked( $settings['dry_run'] ); ?> /> Log candidates only — don't actually change anything yet</label>
-						<p class="description">Strongly recommended to leave this on for the first few runs so you can review the log below before anything is archived for real.</p>
+						<label><input type="checkbox" name="dry_run" value="1" <?php checked( $settings['dry_run'] ); ?> /> <?php esc_html_e( 'Log candidates only &mdash; don\'t actually change anything yet', 'backburner-post-archiver' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Strongly recommended to leave this on for the first few runs so you can review the log below before anything is archived for real.', 'backburner-post-archiver' ); ?></p>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">Archive content older than</th>
+					<th scope="row"><?php esc_html_e( 'Archive content older than', 'backburner-post-archiver' ); ?></th>
 					<td>
 						<input type="number" min="1" name="age_value" value="<?php echo esc_attr( $settings['age_value'] ); ?>" style="width:80px;" />
 						<select name="age_unit">
-							<option value="days" <?php selected( $settings['age_unit'], 'days' ); ?>>Days</option>
-							<option value="months" <?php selected( $settings['age_unit'], 'months' ); ?>>Months</option>
-							<option value="years" <?php selected( $settings['age_unit'], 'years' ); ?>>Years</option>
+							<option value="days" <?php selected( $settings['age_unit'], 'days' ); ?>><?php esc_html_e( 'Days', 'backburner-post-archiver' ); ?></option>
+							<option value="months" <?php selected( $settings['age_unit'], 'months' ); ?>><?php esc_html_e( 'Months', 'backburner-post-archiver' ); ?></option>
+							<option value="years" <?php selected( $settings['age_unit'], 'years' ); ?>><?php esc_html_e( 'Years', 'backburner-post-archiver' ); ?></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">Post types</th>
+					<th scope="row"><?php esc_html_e( 'Post types', 'backburner-post-archiver' ); ?></th>
 					<td>
 						<?php foreach ( $post_types as $pt ) : ?>
 							<label style="display:block;">
@@ -426,7 +469,7 @@ function backburner_settings_page() {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">Categories</th>
+					<th scope="row"><?php esc_html_e( 'Categories', 'backburner-post-archiver' ); ?></th>
 					<td>
 						<select name="category_ids[]" multiple size="8" style="min-width:300px;">
 							<?php foreach ( $categories as $cat ) : ?>
@@ -435,11 +478,11 @@ function backburner_settings_page() {
 								</option>
 							<?php endforeach; ?>
 						</select>
-						<p class="description">Leave nothing selected to apply to all categories. Ctrl/Cmd-click to select more than one.</p>
+						<p class="description"><?php esc_html_e( 'Leave nothing selected to apply to all categories. Ctrl/Cmd-click to select more than one.', 'backburner-post-archiver' ); ?></p>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">Tags</th>
+					<th scope="row"><?php esc_html_e( 'Tags', 'backburner-post-archiver' ); ?></th>
 					<td>
 						<select name="tag_ids[]" multiple size="8" style="min-width:300px;">
 							<?php foreach ( $tags as $tag ) : ?>
@@ -448,42 +491,63 @@ function backburner_settings_page() {
 								</option>
 							<?php endforeach; ?>
 						</select>
-						<p class="description">A post matches if it's in <strong>any selected category OR carries any selected tag</strong> — you don't need both. E.g. select just the "General Tech" category to target that category regardless of tags, or just a "legacy" tag to sweep matching posts across every category. Leave both Categories and Tags empty to apply to everything.</p>
+						<p class="description">
+							<?php
+							echo wp_kses(
+								__( 'A post matches if it is in <strong>any selected category OR carries any selected tag</strong> &mdash; you do not need both. For example, select just one category to target it regardless of tags, or just a &quot;legacy&quot; tag to sweep matching posts across every category. Leave both Categories and Tags empty to apply to everything.', 'backburner-post-archiver' ),
+								array( 'strong' => array() )
+							);
+							?>
+						</p>
 					</td>
 				</tr>
 			</table>
-			<?php submit_button( 'Save Settings', 'primary', 'backburner_save' ); ?>
+			<?php submit_button( __( 'Save Settings', 'backburner-post-archiver' ), 'primary', 'backburner_save' ); ?>
 		</form>
 
 		<hr />
 
-		<h2>Run now</h2>
-		<p>Runs the job immediately using the settings above (still respects the Dry Run toggle) instead of waiting for the daily schedule.</p>
+		<h2><?php esc_html_e( 'Run now', 'backburner-post-archiver' ); ?></h2>
+		<p><?php esc_html_e( 'Runs the job immediately using the settings above (still respects the Dry Run toggle) instead of waiting for the daily schedule.', 'backburner-post-archiver' ); ?></p>
 		<form method="post">
 			<?php wp_nonce_field( 'backburner_run_now' ); ?>
-			<?php submit_button( 'Run Now', 'secondary', 'backburner_run_now' ); ?>
+			<?php submit_button( __( 'Run Now', 'backburner-post-archiver' ), 'secondary', 'backburner_run_now' ); ?>
 		</form>
 
 		<hr />
 
-		<h2>Last run</h2>
+		<h2><?php esc_html_e( 'Last run', 'backburner-post-archiver' ); ?></h2>
 		<?php if ( empty( $log ) ) : ?>
-			<p>Never run yet.</p>
+			<p><?php esc_html_e( 'Never run yet.', 'backburner-post-archiver' ); ?></p>
 		<?php else : ?>
 			<p>
 				<strong><?php echo esc_html( $log['run_at'] ); ?></strong>
-				— <?php echo esc_html( $log['dry_run'] ? 'Dry run (nothing changed)' : 'Live run (posts archived)' ); ?>
-				— <?php echo (int) count( $log['candidates'] ); ?> post(s) matched
+				&mdash; <?php echo esc_html( $log['dry_run'] ? __( 'Dry run (nothing changed)', 'backburner-post-archiver' ) : __( 'Live run (posts archived)', 'backburner-post-archiver' ) ); ?>
+				&mdash;
+				<?php
+				$backburner_matched = (int) count( $log['candidates'] );
+				printf(
+					/* translators: %s: number of posts matched by the last run. */
+					esc_html( _n( '%s post matched', '%s posts matched', $backburner_matched, 'backburner-post-archiver' ) ),
+					esc_html( number_format_i18n( $backburner_matched ) )
+				);
+				?>
 			</p>
 			<?php if ( ! empty( $log['candidates'] ) ) : ?>
 				<table class="widefat striped">
-					<thead><tr><th>Title</th><th>Published</th><th>Link</th></tr></thead>
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Title', 'backburner-post-archiver' ); ?></th>
+							<th><?php esc_html_e( 'Published', 'backburner-post-archiver' ); ?></th>
+							<th><?php esc_html_e( 'Link', 'backburner-post-archiver' ); ?></th>
+						</tr>
+					</thead>
 					<tbody>
 					<?php foreach ( $log['candidates'] as $c ) : ?>
 						<tr>
 							<td><?php echo esc_html( $c['title'] ); ?></td>
 							<td><?php echo esc_html( $c['date'] ); ?></td>
-							<td><a href="<?php echo esc_url( $c['link'] ); ?>" target="_blank" rel="noopener">View</a></td>
+							<td><a href="<?php echo esc_url( $c['link'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'View', 'backburner-post-archiver' ); ?></a></td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -492,8 +556,8 @@ function backburner_settings_page() {
 		<?php endif; ?>
 
 		<hr />
-		<h2>How to un-archive a post</h2>
-		<p>Open the post in the editor, change its Status (in the Publish box) from "Archived" back to "Published", and update. Or check "Never auto-archive this post" on any post beforehand to keep it permanently exempt — that checkbox is in the "Auto Archive" box in the sidebar of every post editor.</p>
+		<h2><?php esc_html_e( 'How to un-archive a post', 'backburner-post-archiver' ); ?></h2>
+		<p><?php esc_html_e( 'Open the post in the editor, change its Status (in the Publish box) from Archived back to Published, and update. Or tick &quot;Never auto-archive this post&quot; on any post beforehand to keep it permanently exempt &mdash; that checkbox is in the Auto Archive box in the sidebar of every post editor.', 'backburner-post-archiver' ); ?></p>
 	</div>
 	<?php
 }

@@ -5,7 +5,7 @@ Tags: archive, content management, cleanup, evergreen content, housekeeping
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,11 @@ Nothing runs. The daily cron check does nothing at all while Enabled is off, and
 1. The BackBurner settings screen — age threshold, post type selection, category/tag scope, and Run now.
 
 == Changelog ==
+
+= 1.0.5 =
+* Internationalised the whole admin interface. Every user-facing string now goes through the translation functions with the backburner-post-archiver text domain — around 70 calls, where there were two. The post count in the last-run summary uses _n() so it pluralises properly in any language.
+* The TechyGeeksHome hub page now lists BackBurner Post Archiver itself, now that it is live on WordPress.org, alongside AppGeek, PDFGeek, Ultimate Settings Panel and NeoDark Pro, which were all missing.
+* Fixed: the DiskGeek link on the hub page pointed at an old announcement post rather than its product page.
 
 = 1.0.4 =
 * Housekeeping only, no functional change from 1.0.3. Added explanatory comments and tidied formatting so that PHPCS against WordPress-Extra, and PHPCompatibility against PHP 7.4 to 8.4, both report zero errors and zero warnings.
