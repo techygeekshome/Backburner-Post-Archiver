@@ -6,8 +6,8 @@
 
 **Automatically move old content out of active circulation after a configurable age — without ever deleting anything or breaking a single URL.**
 
-[![Version](https://img.shields.io/badge/version-1.0.2-4c9bff)](https://techygeekshome.info/product/backburner-post-archiver/)
-[![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-0073d4)](https://techygeekshome.info/product/backburner-post-archiver/)
+[![Version](https://img.shields.io/wordpress/plugin/v/backburner-post-archiver?label=version&color=4c9bff)](https://wordpress.org/plugins/backburner-post-archiver/)
+[![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-0073d4)](https://wordpress.org/plugins/backburner-post-archiver/)
 [![License](https://img.shields.io/badge/license-proprietary%20freeware-b7791f)](LICENSE)
 [![Made_by_TechyGeeksHome](https://img.shields.io/badge/made%20by-TechyGeeksHome-b191f2)](https://techygeekshome.info)
 [![Support on Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b)](https://ko-fi.com/techygeekshome)
@@ -20,13 +20,13 @@
 
 BackBurner Post Archiver quietly retires old content from the parts of your site where "latest" matters — the homepage, category and tag archives, search results, and your RSS feed — once it passes an age threshold you choose. Nothing is deleted. Anyone with a direct link, a bookmark, or an existing search ranking can still open an archived post exactly as before; it simply stops surfacing in listings of your newest content.
 
-Free to download and use. **Currently pending review** by the WordPress.org Plugins Team — until it's approved there, this repository and the [TechyGeeksHome product page](https://techygeekshome.info/product/backburner-post-archiver/) are the official sources.
+Free to download and use, and [live on the WordPress.org Plugin Directory](https://wordpress.org/plugins/backburner-post-archiver/).
 
 ## ⬇️ Installation
 
 | What it is | Get it |
 | --- | --- |
-| WordPress plugin (PHP, no build step) | [BackBurner Post Archiver on TechyGeeksHome](https://techygeekshome.info/product/backburner-post-archiver/) — free download, or grab the zip from the `trunk/` folder in this repository |
+| WordPress plugin *(PHP, no build step)* | [**BackBurner Post Archiver on WordPress.org**](https://wordpress.org/plugins/backburner-post-archiver/) — free, install from wp-admin → Plugins → Add New, or download the zip directly |
 
 1. Upload the `backburner-post-archiver` folder to `/wp-content/plugins/`, or install the zip through the WordPress Plugins screen.
 2. Activate the plugin through the "Plugins" screen in WordPress.
@@ -65,15 +65,15 @@ Archived posts keep their canonical URL and stay in your XML sitemap. BackBurner
 
 ## 📦 Source in this repository
 
-This repository hosts the plugin's current release (`trunk/`), and will mirror WordPress.org's `trunk/`/`tags/` SVN structure once the plugin is approved there. Grab the latest zip from `trunk/` if you'd rather not go through wp-admin.
+This repository mirrors the plugin's WordPress.org SVN layout — the current release in `trunk/` and past tagged versions in `tags/` — for transparency and direct download. Grab a zip of any version straight from `tags/`, or the latest from `trunk/`, if you'd rather not go through wp-admin.
 
 ## 🐛 Support
 
-Found a bug or have a feature request? [Open an issue](https://github.com/techygeekshome/backburner-post-archiver/issues) or get in touch via [TechyGeeksHome](https://techygeekshome.info).
+Found a bug or have a feature request? Use the [WordPress.org support forum](https://wordpress.org/support/plugin/backburner-post-archiver/) or [get in touch](https://techygeekshome.info/contact/).
 
 ## 📄 License
 
-BackBurner Post Archiver is free to download and use. This repository is proprietary freeware, not an open-source project — see [LICENSE](LICENSE) for the full terms. (Once approved on the official WordPress Plugin Directory, the copy distributed there will be licensed GPLv2-or-later, as required by wordpress.org.)
+BackBurner Post Archiver is free to download and use. This repository is proprietary freeware, not an open-source project — see [LICENSE](LICENSE) for the full terms. (The copy distributed via the official WordPress Plugin Directory is licensed GPLv2-or-later, as required by wordpress.org — see the note in [LICENSE](LICENSE).)
 
 © 2026 TechyGeeksHome | Andrew Armstrong.
 
