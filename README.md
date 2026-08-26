@@ -6,7 +6,7 @@
 
 **Automatically move old content out of active circulation after a configurable age — without ever deleting anything or breaking a single URL.**
 
-[![Version](https://img.shields.io/wordpress/plugin/v/backburner-post-archiver?label=version&color=4c9bff)](https://wordpress.org/plugins/backburner-post-archiver/)
+[![Version](https://img.shields.io/github/v/release/techygeekshome/Backburner-Post-Archiver?label=version&color=4c9bff)](https://github.com/techygeekshome/Backburner-Post-Archiver/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-0073d4)](https://wordpress.org/plugins/backburner-post-archiver/)
 [![License](https://img.shields.io/badge/license-proprietary%20freeware-b7791f)](LICENSE)
 [![Made_by_TechyGeeksHome](https://img.shields.io/badge/made%20by-TechyGeeksHome-b191f2)](https://techygeekshome.info)
