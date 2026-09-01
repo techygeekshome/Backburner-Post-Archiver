@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BackBurner Post Archiver
  * Description: Automatically moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age, without deleting anything or breaking any URL. Archived posts keep working for anyone with a direct link or existing search ranking; they just stop appearing in "latest" listings.
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: TechyGeeksHome
  * Author URI: https://techygeekshome.info
  * License: GPLv2 or later
@@ -43,8 +43,8 @@ function backburner_deactivate() {
 
 function backburner_default_settings() {
 	return array(
-		'enabled'      => false, // Master switch — off by default, nothing runs until this is checked.
-		'dry_run'      => true,  // Log candidates only, don't act — on by default.
+		'enabled'      => false, // Master switch - off by default, nothing runs until this is checked.
+		'dry_run'      => true,  // Log candidates only, don't act - on by default.
 		'age_value'    => 12,
 		'age_unit'     => 'months', // days | months | years
 		'post_types'   => array( 'post' ),
@@ -74,7 +74,7 @@ function backburner_register_status() {
 }
 
 // Keep archived posts out of the homepage, category/tag archives, search and RSS
-// while still rendering fine on their own single-post URL — that is the whole
+// while still rendering fine on their own single-post URL - that is the whole
 // point: no dead links, no redirects needed, just removed from active circulation.
 add_action( 'pre_get_posts', 'backburner_exclude_from_public_queries' );
 function backburner_exclude_from_public_queries( $query ) {
@@ -204,7 +204,7 @@ function backburner_find_candidates( $settings ) {
 		'order'          => 'ASC',
 	);
 
-	// Category and/or tag targeting — matches EITHER (a post only needs to be
+	// Category and/or tag targeting - matches EITHER (a post only needs to be
 	// in the chosen category(ies) OR carry the chosen tag(s), not both), so
 	// e.g. "General Tech category, no tags" or "any category, 'legacy' tag"
 	// both work as expected. Leaving both empty applies to everything.
@@ -359,6 +359,24 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 				'name'        => __( 'TranscribeGeek', 'backburner-post-archiver' ),
 				'description' => __( 'Turn recordings into text on your own machine, as a transcript or a subtitle file.', 'backburner-post-archiver' ),
 				'url'         => 'https://techygeekshome.info/transcribegeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'AuthGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Keep your two-factor codes in one encrypted file on your own PC. No account, no sync.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/authgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'ShortGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Turn a guide, a feed or an idea into a narrated, captioned vertical short.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/shortgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'SoundGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Clean up a recording: background noise, mains hum and levels, on your own machine.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/soundgeek/',
 				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
 			),
 			array(
