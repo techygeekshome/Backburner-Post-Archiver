@@ -5,7 +5,7 @@ Tags: archive, content management, cleanup, evergreen content, housekeeping
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,10 @@ Nothing runs. The daily cron check does nothing at all while Enabled is off, and
 1. The BackBurner settings screen — age threshold, post type selection, category/tag scope, and Run now.
 
 == Changelog ==
+
+= 1.0.6 =
+* The TechyGeeksHome panel now lists the whole current range of applications rather than four of them, and links to the full list.
+* Tidied a few pieces of wording in the admin screens.
 
 = 1.0.5 =
 * Internationalised the whole admin interface. Every user-facing string now goes through the translation functions with the backburner-post-archiver text domain — around 70 calls, where there were two. The post count in the last-run summary uses _n() so it pluralises properly in any language.

@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: BackBurner Post Archiver
- * Description: Automatically moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age — without deleting anything or breaking any URL. Archived posts keep working for anyone with a direct link or existing search ranking; they just stop appearing in "latest" listings.
- * Version: 1.0.5
+ * Description: Automatically moves old content out of active circulation (homepage, category/tag archives, search, RSS) after a configurable age, without deleting anything or breaking any URL. Archived posts keep working for anyone with a direct link or existing search ranking; they just stop appearing in "latest" listings.
+ * Version: 1.0.6
  * Author: TechyGeeksHome
  * Author URI: https://techygeekshome.info
  * License: GPLv2 or later
@@ -113,7 +113,7 @@ function backburner_render_metabox( $post ) {
 	echo '<label><input type="checkbox" name="backburner_exclude" value="1" ' . checked( $excluded, '1', false ) . ' /> ' . esc_html__( 'Never auto-archive this post', 'backburner-post-archiver' ) . '</label>';
 	if ( BACKBURNER_STATUS === $status ) {
 		echo '<p style="margin-top:8px;">' . wp_kses(
-			__( '<strong>This post is currently archived</strong> — hidden from homepage/category/search listings, but still live at its own URL.', 'backburner-post-archiver' ),
+			__( '<strong>This post is currently archived</strong>. It is hidden from homepage, category and search listings, but still live at its own URL.', 'backburner-post-archiver' ),
 			array( 'strong' => array() )
 		) . '</p>';
 		echo '<p><em>' . esc_html__( 'Change the Status field above (in the Publish box) back to Published to restore it to normal circulation.', 'backburner-post-archiver' ) . '</em></p>';
@@ -314,21 +314,51 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 
 		$software = array(
 			array(
+				'name'        => __( 'PDFGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Merge, split, extract, rotate, watermark and password-protect PDFs, entirely offline.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/pdfgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
 				'name'        => __( 'AppGeek', 'backburner-post-archiver' ),
 				'description' => __( 'Update every application on a Windows PC in one go, using winget.', 'backburner-post-archiver' ),
 				'url'         => 'https://techygeekshome.info/appgeek/',
 				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
 			),
 			array(
-				'name'        => __( 'PDFGeek', 'backburner-post-archiver' ),
-				'description' => __( 'Merge, split, compress and convert PDFs entirely offline.', 'backburner-post-archiver' ),
-				'url'         => 'https://techygeekshome.info/pdfgeek/',
+				'name'        => __( 'CleanGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Clear out temporary files, caches and leftovers, and see what was actually removed.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/cleangeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'CutGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Take the background out of a photograph at full size, on your own machine.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/cutgeek/',
 				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
 			),
 			array(
 				'name'        => __( 'DiskGeek', 'backburner-post-archiver' ),
-				'description' => __( 'Free disk space analyser for Windows: scan, find duplicates and reclaim space.', 'backburner-post-archiver' ),
+				'description' => __( 'Free disk space analyser: see what is filling a drive, find the biggest files and duplicates.', 'backburner-post-archiver' ),
 				'url'         => 'https://techygeekshome.info/diskgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'DriverGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Find out which drivers are out of date, and get them from the manufacturer, not a bundle.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/drivergeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'ReelGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Turn a folder of photographs into a vertical edit cut to a beat grid.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/reelgeek/',
+				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
+			),
+			array(
+				'name'        => __( 'TranscribeGeek', 'backburner-post-archiver' ),
+				'description' => __( 'Turn recordings into text on your own machine, as a transcript or a subtitle file.', 'backburner-post-archiver' ),
+				'url'         => 'https://techygeekshome.info/transcribegeek/',
 				'cta'         => __( 'View / Download', 'backburner-post-archiver' ),
 			),
 			array(
@@ -341,7 +371,7 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 		?>
 		<div class="wrap tghhub-dashboard">
 			<h1>TechyGeeksHome</h1>
-			<p><?php esc_html_e( 'A shared home for everything we have built &mdash; our WordPress plugins, our themes, and our standalone software.', 'backburner-post-archiver' ); ?></p>
+			<p><?php esc_html_e( 'A shared home for everything we have built: our WordPress plugins, our themes, and our standalone software.', 'backburner-post-archiver' ); ?></p>
 
 			<h2><?php esc_html_e( 'Our Plugins', 'backburner-post-archiver' ); ?></h2>
 			<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;">
@@ -366,6 +396,7 @@ if ( ! function_exists( 'tghhub_render_landing_page' ) ) {
 			</div>
 
 			<h2 style="margin-top:32px;"><?php esc_html_e( 'Our Software', 'backburner-post-archiver' ); ?></h2>
+			<p><?php esc_html_e( 'All free, all offline, all for Windows.', 'backburner-post-archiver' ); ?> <a href="https://techygeekshome.info/geek-tools/" target="_blank" rel="noopener"><?php esc_html_e( 'See the whole range', 'backburner-post-archiver' ); ?></a>.</p>
 			<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;">
 				<?php foreach ( $software as $s ) : ?>
 					<div style="border:1px solid #dcdcde;border-radius:6px;padding:16px;width:280px;background:#fff;">
@@ -402,7 +433,7 @@ function backburner_handle_actions() {
 
 	if ( isset( $_POST['backburner_run_now'] ) && check_admin_referer( 'backburner_run_now' ) ) {
 		backburner_run( true );
-		add_settings_error( 'backburner_notices', 'ran', __( 'Run complete — see the log below.', 'backburner-post-archiver' ), 'success' );
+		add_settings_error( 'backburner_notices', 'ran', __( 'Run complete. See the log below.', 'backburner-post-archiver' ), 'success' );
 	}
 }
 
